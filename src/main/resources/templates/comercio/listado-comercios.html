@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	<meta charset="UTF-8" />
+
+<head th:replace="layout/layout :: head"></head>
+<body class="hold-transition sidebar-mini">
+
+
+
+	<div class="wrapper">
+		<nav th:replace="layout/layout :: nav-up"></nav>
+		<aside th:replace="layout/layout :: nav-left"></aside>
+		<div class="content-wrapper">
+			<div class="container py-4 ">
+
+
+				<div class="card bg-dark text-white "
+					>
+					<div class="card-header">
+						<h5>Comercios</h5>
+						<input class="form-control" id="myBuscador" type="text"
+							placeholder="Buscar..">
+					</div>
+
+					<div class="card-body  ">
+
+						<div
+							class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 nav   anyClass"
+							id="card">
+
+							<section class="col mb-4 " th:each="comercio: ${comercios} ">
+								<div class="card h-100 bg-dark zoom border border-primary">
+
+									<img th:if="${comercio.image != null && #strings.length(comercio.image)>0} " class="card-img-top"
+										th:src="@{'/uploads/' + ${comercio.image}}"
+										th:alt="${comercio.image}"> <img
+										th:if="${comercio.image == null} "
+										th:src="@{images/image-not-found.png}" class="card-img-top"
+										alt="...">
+									<div class="card-body">
+										<h4 class="card-title" th:text="${comercio.razonSocial}">Card
+											title</h4>
+										<p class="card-text" th:text="${comercio.descripcion}"
+											th:if="${comercio.descripcion != null }">Descripcion del
+											comercio</p>
+										<p class="card-text" th:if="${comercio.descripcion == null }">Este
+											comercio no tiene descripción</p>
+									</div>
+									<div class="card-footer ">
+										Contacto<br> <small
+											th:text="'Email: '+${comercio.email} "> </small><br> <small
+											th:text="'Dirección: '+${comercio.direccion} "></small> <br>
+										<a th:href="@{/pedido/} + ${comercio.id}"
+											class="btn btn-primary stretched-link">Ir a ...</a>
+									</div>
+
+								</div>
+							</section>
+
+						</div>
+
+
+					</div>
+
+				</div>
+			</div>
+			<footer th:replace="layout/layout :: footer"> </footer>
+		</div>
+
+	</div>
+
+
+
+
+
+	<div sec:authorize="hasRole('ROLE_COMERCIO')">Esto es una prueva
+	</div>
+
+
+
+</body>
+
+
+
+
+
+
+</html>

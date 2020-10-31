@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<meta charset="UTF-8" />
+<head th:replace="layout/layout :: head"></head>
+<body>
+
+	<nav th:replace="layout/layout :: nav-up"></nav>
+	<aside th:replace="layout/layout :: nav-left"></aside>
+	<div class="content-wrapper">
+		<div class="container py-4">
+
+			<div class="card bg-dark text-white">
+				<div class="card-header">Registrar producto</div>
+				<div class="card-body">
+					<form th:action="@{/productos/form/}+${producto.comercio.id}"
+						th:object="${producto}" method="post"
+						enctype="multipart/form-data">
+
+						<div class="form-group row">
+							<label for="nombre" class="col-sm-2 col-form-label">Nombre
+								del producto</label>
+							<div class="col-sm-6">
+								<input type="text" th:field="*{nombre}" class="form-control"
+									th:errorclass="'form-control alert-danger'" /> <small
+									class="form-text text-danger"
+									th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></small>
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<label for="descripcion" class="col-sm-2 col-form-label">Descripción</label>
+							<div class="col-sm-6">
+								<input type="text" th:field="*{descripcion}"
+									class="form-control"
+									th:errorclass="'form-control alert-danger'" /> <small
+									class="form-text text-danger"
+									th:if="${#fields.hasErrors('descripcion')}"
+									th:errors="*{descripcion}"></small>
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<label for="precio" class="col-sm-2 col-form-label">Precio</label>
+							<div class="col-sm-6">
+								<input type="number" th:field="*{precio}" class="form-control"
+									th:errorclass="'form-control alert-danger'" /> <small
+									class="form-text text-danger"
+									th:if="${#fields.hasErrors('precio')}" th:errors="*{precio}"></small>
+							</div>
+						</div>
+
+						<div class="col-sm-12">
+							<div class="form-group row">
+								<div class="col-sm-3">
+									<div class="form-group row custom-control custom-checkbox">
+										<input type="checkbox" class="custom-control-input"
+											th:checked="${state} ? '' : 'checked'" th:field="*{state}"
+											id="customCheck1"> <label
+											class="col-sm-12 col-form-label custom-control-label"
+											for="customCheck1">Disponible para la venta</label>
+									</div>
+								</div>
+								<label for="unidadMedidd" class="col-sm-2 col-form-label"
+									th:text="'Ingrese unidad de medida'"></label>
+								<div class="col-sm-3">
+									<a class="nav-item dropdown show mx-2"> <select
+										id="medidas" th:field="*{unidad.nombre}" name="medidas"
+										class="btn btn-outline-primary dropdown-toggle ">
+
+											<option th:each="item : ${medidas}" th:value="${item.nombre}"
+												th:text="${item.nombre}">My item</option>
+									</select></a>
+
+								</div>
+
+							</div>
+							<div class="form-group row">
+
+								<label for="file" class="col-sm-2 col-form-label">Imagen</label>
+								<div class="col-sm-6">
+									<input type="file" name="file" class="form-control" />
+
+								</div>
+							</div>
+						</div>
+
+
+
+
+						<div class="form-group row">
+							<div class="col-sm-6">
+								<input type="submit" value="Registrar Producto"
+									class="btn btn-secondary" />
+							</div>
+						</div>
+
+					</form>
+				</div>
+			</div>
+		</div>
+		<footer th:replace="layout/layout :: footer"></footer>
+		</div>
+		
+</body>
+
+
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<meta charset="UTF-8" />
+<head th:replace="layout/layout :: head"></head>
+<body>
+
+	<div class="container py-4">
+
+		<div class="card bg-dark text-white">
+			<div class="card-header" >Registrar Cliente</div>
+			<div class="card-body">
+
+				
+
+				<form th:action="@{/cliente/form}" th:object="${cliente}" method="post"
+					enctype="multipart/form-data" style="height: 230px; ">
+					<div class="form-group row">
+						<label for="nicname" class="col-sm-2 col-form-label">Nombre de usuario</label>
+						<div class="col-sm-6">
+							<input type="text" th:field="*{nicname}" class="form-control"
+								th:errorclass="'form-control alert-danger'" /> 
+								<small
+								class="form-text text-danger"
+								th:if="${#fields.hasErrors('nicname')}" th:errors="*{nicname}"></small>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="password" class="col-sm-2 col-form-label">Contraseña</label>
+						<div class="col-sm-6">
+							<input type="text" th:field="*{password}" class="form-control"
+								th:errorclass="'form-control alert-danger'"/> 
+								<small
+								class="form-text text-danger"
+								th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></small>
+						</div>
+					</div>
+						<div class="form-group row">
+						<label for="password_repeat" class="col-sm-2 col-form-label">Repita la contraseña</label>
+						<div class="col-sm-6">
+							<input type="text"   class="form-control"
+								>
+								
+						</div>
+					</div><div class="form-group row">
+						<label for="email" class="col-sm-2 col-form-label">Correo Electronico</label>
+						<div class="col-sm-6">
+							<input type="text" th:field="*{email}" class="form-control"
+							th:errorclass="'form-control alert-danger'" >
+							<small
+								class="form-text text-danger"
+								th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small> 
+						</div>
+					</div>
+					</div>
+						
+				
+					<div class="form-group row">
+						<div class="col-sm-6">
+							<input type="submit" value="Registrar Usuario"
+								class="btn btn-secondary" />
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+</body>
+<footer th:replace="layout/layout :: footer"></footer> 
+</html>

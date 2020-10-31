@@ -1,0 +1,8 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<meta charset="UTF-8" />
+<body>
+	<div sec:authentication="isAutenticated()">Hola</div>
+	<div sec:authorize="hasRole('Role_admin')">aca rol</div>
+</body>
+</html>

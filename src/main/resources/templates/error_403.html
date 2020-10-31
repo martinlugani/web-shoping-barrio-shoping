@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<body>
+
+	<header th:replace="layout/layout :: header"></header>
+
+	<div class="container py-4">
+
+		<div class="card bg-danger text-white">
+			<div class="card-header" >Acceso Denegado!</div>
+			<div class="card-body">
+				<h5 class="card-title">No tiene acceso</h5>
+				<a th:href="@{/}" class="btn btn-outline-light" role="button" th:text="Inicio">Ir al inicio</a>
+				<a sec:authorize="hasRole('ROLE_COMERCIO')">Valido</a>
+			</div>
+		</div>
+	</div>
+
+	<footer th:replace="layout/layout :: footer"></footer>
+</body>
+</html>

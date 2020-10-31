@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+	<div class="card col-lg-6 " th:fragment="tableCarrito" id="carrito"
+		style="display: none;">
+
+		<form th:action="@{/pedido/guardar}" th:object="${pedido}"
+			method="post">
+			
+			
+			
+			
+			<table th:replace="producto/items-carrito :: items"></table>
+
+			<table class="table table-sm table-striped table-hover "
+				id="cargarItemProductos">
+				
+
+				<thead>
+					<tr>
+						<th>Nombre</th>
+						<th>Precio</th>
+						<th>Cantidad</th>
+						<th>Sub-Total</th>
+						<th>Eliminar</th>
+					</tr>
+				</thead>
+				<tbody></tbody>
+
+			</table>
+			<input type="hidden" id= "comercio" name="comercio"th:value="${comercio}"  
+			class="form-control"/>
+			<h5>
+				<span>Total</span> <span class="badge badge-secondary"
+					id="gran_total">0</span>
+			</h5>
+
+			<div class="form-group row">
+				<div class="col-sm-6">
+					<input type="submit" value="Enviar pedido"
+						class="btn btn-secondary" />
+				</div>
+			</div>
+		</form>
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<form th:action="@{/pedido/guardar/}" th:object="${pedido}" method="post">
+
+
+		<div class="form-group row">
+			<div class="col-sm-6">
+				<input type="submit" th:value="'enviar'" class="btn btn-secondary" />
+			</div>
+		</div>
+
+
+	</form>
+</body>
+</html>
