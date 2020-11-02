@@ -21,4 +21,6 @@ public interface IProductoServices {
 	public List<Producto> findAllByComercioIdOrderByNombre(Long idComercio);
 
 	public Producto findById(Long id);
+	
+	public void delete(Long id);
 }

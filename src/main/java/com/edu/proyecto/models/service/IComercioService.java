@@ -7,4 +7,5 @@ import com.edu.proyecto.models.entity.Comercio;
 public interface IComercioService {
 	public Comercio findById(Long id);
 	public List<Comercio> findAll();
+	public Comercio findByUsername(String username);
 }

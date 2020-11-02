@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-	<meta charset="UTF-8" />
+<meta charset="UTF-8" />
 
 <head th:replace="layout/layout :: head"></head>
 <body class="hold-transition sidebar-mini">
@@ -11,12 +11,12 @@
 	<div class="wrapper">
 		<nav th:replace="layout/layout :: nav-up"></nav>
 		<aside th:replace="layout/layout :: nav-left"></aside>
+
 		<div class="content-wrapper">
 			<div class="container py-4 ">
 
 
-				<div class="card bg-dark text-white "
-					>
+				<div class="card bg-dark text-white ">
 					<div class="card-header">
 						<h5>Comercios</h5>
 						<input class="form-control" id="myBuscador" type="text"
@@ -32,7 +32,9 @@
 							<section class="col mb-4 " th:each="comercio: ${comercios} ">
 								<div class="card h-100 bg-dark zoom border border-primary">
 
-									<img th:if="${comercio.image != null && #strings.length(comercio.image)>0} " class="card-img-top"
+									<img
+										th:if="${comercio.image != null && #strings.length(comercio.image)>0} "
+										class="card-img-top"
 										th:src="@{'/uploads/' + ${comercio.image}}"
 										th:alt="${comercio.image}"> <img
 										th:if="${comercio.image == null} "

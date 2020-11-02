@@ -1,5 +1,6 @@
 package com.edu.proyecto.models.service;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
@@ -66,4 +67,17 @@ public class UploadFileServiceImpl implements IUploadFileService {
 		return uniqueFilename;
 	}
 
+	public boolean delete(String filename) {
+		if (filename != null && filename.length() > 0) {
+			Path rootPath = getPath(filename);
+			File archivo = rootPath.toFile();
+
+			if (archivo.exists() && archivo.canRead()) {
+				if (archivo.delete()) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 }

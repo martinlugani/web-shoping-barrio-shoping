@@ -11,4 +11,6 @@ public interface IUploadFileService {
 	public Resource load(String filename, Long id) throws MalformedURLException;
 
 	public String copy(MultipartFile file, Long comercioId) throws IOException;
+	
+	public boolean delete(String filename);
 }

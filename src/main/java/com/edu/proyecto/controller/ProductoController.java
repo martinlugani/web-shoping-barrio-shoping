@@ -26,6 +26,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,6 +34,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.edu.proyecto.models.dao.IProductoDao;
 import com.edu.proyecto.models.entity.Cliente;
 import com.edu.proyecto.models.entity.Comercio;
 import com.edu.proyecto.models.entity.Pedido;
@@ -81,8 +83,6 @@ public class ProductoController {
 				.body(recurso);
 	}
 
-	
-
 	@Secured({ "ROLE_COMERCIO" })
 	@RequestMapping(value = "/form/{comercioId}")
 	public String crear(@PathVariable(value = "comercioId") Long comercioId, Model model, RedirectAttributes flash) {
@@ -93,10 +93,37 @@ public class ProductoController {
 		List<UnidadMedida> medidas = productoService.findAllMedida();
 //		flash.addFlashAttribute("mensage", "1");
 		producto.setState(true);
+		model.addAttribute("comercio", comercioId);
 		model.addAttribute("mensaje", "Solo a efectos de desarrollo 1".concat(comercio.toString()));
 		model.addAttribute("producto", producto);
 		model.addAttribute("medidas", medidas);
 		return "comercio/form_producto";
+	}
+
+	@Secured({ "ROLE_COMERCIO" })
+	@GetMapping("/editar/{productoId}")
+	public String editar(@PathVariable(value = "productoId") Long productoId, Authentication authentication,
+			Model model, RedirectAttributes flash) {
+
+		log.info("entro en editar/producto/");
+		if (productoId > 0) {
+			List<UnidadMedida> medidas = productoService.findAllMedida();
+			model.addAttribute("medidas", medidas);
+			Comercio comercio = comercioService.findByUsername(authentication.getName());
+			model.addAttribute("comercio", comercio.getId());
+			System.out.println("id comercio producto controller " + comercio.getId());
+			if (comercio != null) {
+				for (Producto producto : comercio.getProductos()) {
+					if (producto.getId() == productoId) {
+
+						model.addAttribute("producto", producto);
+						return "comercio/form_producto";
+					}
+				}
+			}
+		}
+
+		return "";
 	}
 
 	@RequestMapping(value = "/form/{comercioId}", method = RequestMethod.POST)
@@ -127,16 +154,21 @@ public class ProductoController {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
 			producto.setFotoUrl(uniqueFilename);
 
 		}
+		String valor = (producto.getId() != null) ? "producto editar" : "producto nuevo";
+		log.info(valor);
 
 //		System.out.println(
 //				"Entro en guardar producto".concat(producto.toString().concat(producto.getUnidad().getNombre())));
 //		producto.getComercio().setId(comercioId);
+
 		productoService.save(producto);
 
+		if (producto.getId() != null) {
+			return "redirect:/";
+		}
 		// Importante decidir a que pagina pertenece este link
 		return "redirect:/productos/form/" + producto.getComercio().getId();
 	}
@@ -146,6 +178,23 @@ public class ProductoController {
 		System.out.println("Entro aca");
 
 		return productoService.findByNombreLikeIgnoreCase(term);
+	}
+
+	@Secured("ROLE_COMERCIO")
+	@RequestMapping(value = "/eliminar/{id}")
+	public String eliminar(@PathVariable(value = "id") Long idProd, RedirectAttributes flash) {
+
+		if (idProd > 0) {
+			Producto producto = productoService.findById(idProd);
+
+			if (producto.getState()) {
+
+			}
+			producto.setState((producto.getState()) ? false : true);
+			productoService.save(producto);
+
+		}
+		return "redirect:/";
 	}
 
 	private boolean hasRole(String role) {

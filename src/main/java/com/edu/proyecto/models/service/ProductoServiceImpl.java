@@ -74,6 +74,12 @@ public class ProductoServiceImpl implements IProductoServices {
 		return productoDao.findById(id).orElse(null);
 	}
 
+	@Override
+	public void delete(Long id) {
+		// TODO Auto-generated method stub
+		productoDao.delete(productoDao.findById(id).orElse(null));
+	}
+
 	
 
 }

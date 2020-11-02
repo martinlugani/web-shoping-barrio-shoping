@@ -85,16 +85,16 @@ public class PedidoController {
 	public String obtenerProductoComercio(@PathVariable(value = "id") Long comercioId, Model model,
 			HttpServletRequest request, Authentication auth) {
 		List<Producto> productos = productoService.findAllByComercioIdOrderByNombre(comercioId);
-
+		model.addAttribute("comercio", comercioId);
 		if (request.isUserInRole("ROLE_CLIENTE")) {
 			Pedido pedido = new Pedido();
 
-			model.addAttribute("comercio", comercioId);
+			
 			model.addAttribute("pedido", pedido);
 		}
-//		Pedido pedido = new Pedido();
+		Pedido pedido = new Pedido();
 
-//		model.addAttribute("pedido", pedido);
+		model.addAttribute("pedido", pedido);
 
 		System.out.println(productos);
 		model.addAttribute("productos", productos);

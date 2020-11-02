@@ -30,4 +30,11 @@ public class ComercioServiceImpl implements IComercioService {
 		return (List<Comercio>) comercioDao.findAll();
 	}
 
+	@Override
+	@Transactional(readOnly = true)
+	public Comercio findByUsername(String username) {
+		// TODO Auto-generated method stub
+		return comercioDao.findByUsername(username);
+	}
+
 }

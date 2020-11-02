@@ -56,21 +56,33 @@ public class ComercioControler {
 
 	@Autowired
 	private IUploadFileService uploadFileService;
-	
+
 	@GetMapping("/")
 	public String listar(Model mode, Authentication authentication, HttpServletRequest request) {
+		if (request.isUserInRole("ROLE_COMERCIO")) {
+
+			Comercio comercio = comercioService.findByUsername(authentication.getName());
+
+			log.info("Forma  role_comercio  tienes acceso!".concat(comercio.toString()));
+			return "redirect:/pedido/" + comercio.getId().toString();
+
+		}
 		List<Comercio> comercios = comercioService.findAll();
 		if (authentication != null) {
-			log.info("Hola usuario autenticado, tu username es: ".concat(authentication.getName()));
+
+			log.info("Hola usuario autenticado, tu username es: ".concat(authentication.getName()) + " getAuthoryties "
+					+ authentication.getAuthorities() + " credentials " + authentication.getCredentials() + "   ");
+
 		} else {
 			log.info("Su usuario no esta autenticado");
 		}
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		if(request.isUserInRole("ROLE_ADMIN")) {
+		if (request.isUserInRole("ROLE_ADMIN")) {
 			log.info("Forma usando HttpServletRequest: Hola ".concat(auth.getName()).concat(" tienes acceso!"));
 		} else {
 			log.info("Forma usando HttpServletRequest: Hola ".concat(auth.getName()).concat(" NO tienes acceso!"));
 		}
+
 		mode.addAttribute("comercios", comercios);
 		return "comercio/listado-comercios";
 //		return "index";
@@ -100,13 +112,14 @@ public class ComercioControler {
 		return authorities.contains(new SimpleGrantedAuthority(role));
 
 	}
+
 	@GetMapping(value = "/uploads/{filename:.+}")
 	public ResponseEntity<Resource> verFoto(@PathVariable(value = "filename") String filename) {
 
 		Resource recurso = null;
 
 		try {
-			recurso = uploadFileService.load(filename,null);
+			recurso = uploadFileService.load(filename, null);
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}
