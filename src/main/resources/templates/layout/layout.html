@@ -15,6 +15,7 @@
 <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
 <link rel="stylesheet" th:href="@{/css/jquery-ui.min.css}" />
 <link rel="stylesheet" th:href="@{/css/all.css}" />
+
 <!-- Ionicons -->
 <link rel="stylesheet"
 	href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
@@ -26,10 +27,16 @@
 <link
 	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700"
 	rel="stylesheet">
+<!-- data tables -->
 
 
-
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
 <style type="text/css">
+
+/*table tablapedidos*/
+
+/*tno tabla
+*/
 .zoom:hover {
 	/* tranformamos el elemento al pasar el mouse por encima al doble de
 										           su tamaño con scale(2). */
@@ -78,7 +85,8 @@ body {
 			<li class="nav-item d-none d-sm-inline-block"><a th:href="@{/}"
 				class="nav-link" th:text="Inicio">Inicio<ion-icon
 						name="alert-outline"></ion-icon></a></li>
-			<li sec:authorize="!isAuthenticated()" class="nav-item d-none d-sm-inline-block"><a
+			<li sec:authorize="!isAuthenticated()"
+				class="nav-item d-none d-sm-inline-block"><a
 				th:href="@{/login}" class="nav-link">Login</a></li>
 		</ul>
 
@@ -135,15 +143,17 @@ body {
 
 					<!-- desplegable en sidebar -->
 
-					<li sec:authorize="hasRole('ROLE_COMERCIO')" class="nav-item has-treeview"><a href="#" class="nav-link">
+					<li sec:authorize="hasRole('ROLE_COMERCIO')"
+						class="nav-item has-treeview"><a href="#" class="nav-link">
 							<i class="nav-icon fas fa-tachometer-alt"></i>
 							<p>
 								Dashboard <i class="right fas fa-angle-left"></i>
 							</p>
 					</a>
 						<ul class="nav nav-treeview">
-							<li class="nav-item"><a th:href="@{/productos/form/}+ ${comercio}"
-								class="nav-link"> <i class="far fa-circle nav-icon"></i>
+							<li class="nav-item"><a
+								th:href="@{/productos/form/}+ ${comercio}" class="nav-link">
+									<i class="far fa-circle nav-icon"></i>
 									<p>Registrar Producto</p>
 							</a></li>
 							<li class="nav-item"><a href="../../index2.html"
@@ -241,6 +251,7 @@ body {
 	<script th:src="@{/js/bootstrap.js}"></script>
 	<!-- overlayScrollbars -->
 	<script th:src="@{/js/adminlte/jquery.overlayScrollbars.min.js}"></script>
+
 	<!-- AdminLTE App -->
 	<script th:src="@{/js/adminlte/adminlte.min.js}"></script>
 	<!-- AdminLTE for demo purposes -->
@@ -252,7 +263,24 @@ body {
 
 	<script th:src="@{/js/adminlte/all.js}"></script>
 	<script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script>
+	<!-- datatables -->
+	<script th:src="@{/js/jquery.dataTables.js}"></script>
+	<script type="text/javascript"
+		src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+	
+	<script type="text/javascript"
+		src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
 
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#tab").DataTable();
+		});
+		$.extend( $.fn.dataTable.defaults, {
+		    searching: false,
+		    paging: false,
+		    scrollY: 400
+		} );
+	</script>
 	<script type="text/javascript">
 		$(document)
 				.ready(

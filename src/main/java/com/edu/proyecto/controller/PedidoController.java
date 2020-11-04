@@ -52,30 +52,30 @@ public class PedidoController {
 	public String guardar(@Valid Pedido pedido, @RequestParam(name = "item_id[]", required = false) Long[] itemId,
 			@RequestParam(name = "cantidad[]", required = false) Integer[] cantidad,
 			@RequestParam(value = "comercio", required = false) Long idComercio, RedirectAttributes flash,
-			SessionStatus status,Authentication auth) {
+			SessionStatus status, Authentication auth) {
 		pedido = new Pedido();
-		Comercio comercio=comercioService.findById(idComercio);
-		Cliente cliente =clienteService.findByName(auth.getName());
+		Comercio comercio = comercioService.findById(idComercio);
+		Cliente cliente = clienteService.findByName(auth.getName());
 		pedido.setCliente(cliente);
 		pedido.setComercio(comercio);
-	
+
 		for (int i = 0; i < itemId.length; i++) {
 			Producto producto = productoService.findById(itemId[i]);
 
 			ItemPedido linea = new ItemPedido();
 			linea.setCantidad(cantidad[i]);
 			linea.setProducto(producto);
-			
+
 			pedido.addItem(linea);
-			
+
 			log.info("ID: " + itemId[i].toString() + ", cantidad: " + cantidad[i].toString());
 		}
-		
+
 		pedido.calculaTotal();
-		
+
 		log.info("metodo pedido/guardar  id comercio " + idComercio);
 //		log.info("metodo pedido/guardar " + pedido.toString());
-		
+
 		status.setComplete();
 		pedidoService.save(pedido);
 		return "redirect:/";
@@ -89,7 +89,6 @@ public class PedidoController {
 		if (request.isUserInRole("ROLE_CLIENTE")) {
 			Pedido pedido = new Pedido();
 
-			
 			model.addAttribute("pedido", pedido);
 		}
 		Pedido pedido = new Pedido();
@@ -101,5 +100,11 @@ public class PedidoController {
 
 		return "producto/listado-productos";
 //		return "pruevas";
+	}
+
+	@Secured("ROLE_COMERCIO")
+	@GetMapping("/lista")
+	public String listarPedidos() {
+		return "comercio/lista-pedidos";
 	}
 }
