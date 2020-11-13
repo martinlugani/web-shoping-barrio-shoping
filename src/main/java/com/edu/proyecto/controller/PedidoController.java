@@ -1,5 +1,6 @@
 package com.edu.proyecto.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -104,7 +105,48 @@ public class PedidoController {
 
 	@Secured("ROLE_COMERCIO")
 	@GetMapping("/lista")
-	public String listarPedidos() {
+	public String listarPedidos(Model model, Authentication auth) {
+		Comercio comercio = comercioService.findByUsername(auth.getName());
+
+		List<Pedido> pedidos = pedidoService.findByComercio(comercio);
+
+		log.info("comercio ".concat(comercio.toString()));
+		for (Pedido pedido : pedidos) {
+			log.info("pedido: ".concat(pedido.getComercio().getNicname()));
+			log.info("Cliente".concat(pedido.getCliente().getNicname()));
+		}
+
+		model.addAttribute("pedidos", pedidos);
+
 		return "comercio/lista-pedidos";
+	}
+
+	@Secured("ROLE_COMERCIO")
+	@GetMapping("/ver/{id}")
+	public String mostrarPedido(@PathVariable(value = "id") Long idPedido, @PathVariable(value = "id") Long id,
+			Model model, Authentication auth) {
+		Pedido pedido = pedidoService.findById(idPedido);
+
+		model.addAttribute("pedido", pedido);
+
+		for (ItemPedido item : pedido.getItems()) {
+			log.info("item ".concat(item.getProducto().getNombre()));
+		}
+		List<String> estados = new ArrayList<String>();
+		estados.add("Solicitado");
+		estados.add("En preparación");
+		estados.add("Terminado");
+		estados.add("Entregado");
+		model.addAttribute("estados", estados);
+		return "comercio/pedido-form";
+	}
+
+	@Secured("ROLE_COMERCIO")
+	@PostMapping("/modificar/{id}")
+	public String modificarPedido(@PathVariable(value = "id") Long idPedido ,@Valid Pedido ped) {
+		Pedido pedido=pedidoService.findById(idPedido);
+		pedidoService.save(ped);
+
+		return "redirect:/pedido/ver/" + idPedido;
 	}
 }

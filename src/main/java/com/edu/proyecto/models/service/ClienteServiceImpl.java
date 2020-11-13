@@ -34,5 +34,13 @@ public class ClienteServiceImpl implements IClienteService{
 		// TODO Auto-generated method stub
 		return clienteDao.findByUsername(name);
 	}
+
+
+
+	@Override
+	public Cliente findById(Long id) {
+		// TODO Auto-generated method stub
+		return clienteDao.findById(id).orElse(null);
+	}
 	
 }

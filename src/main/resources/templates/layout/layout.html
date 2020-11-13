@@ -172,6 +172,11 @@ body {
 								name="albums-outline"></ion-icon>
 							<p>Registrar Producto</p>
 					</a></li>
+					<li sec:authorize="hasRole('ROLE_COMERCIO')" class="nav-item"><a
+						th:href="@{/pedido/lista}" class="nav-link"> <ion-icon
+								name="albums-outline"></ion-icon>
+							<p>Lista pedidos</p>
+					</a></li>
 
 
 
@@ -270,15 +275,17 @@ body {
 	
 	<script type="text/javascript"
 		src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
-
+<!-- jsGrid -->
+<script src="../../plugins/jsgrid/demos/db.js"></script>
+<script src="../../plugins/jsgrid/jsgrid.min.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$("#tab").DataTable();
 		});
 		$.extend( $.fn.dataTable.defaults, {
 		    searching: false,
-		    paging: false,
-		    scrollY: 400
+		    ordering: true,
+		    paging: false
 		} );
 	</script>
 	<script type="text/javascript">

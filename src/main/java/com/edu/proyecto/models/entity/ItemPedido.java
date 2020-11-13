@@ -16,6 +16,12 @@ import javax.persistence.Table;
 @Table(name = "pedidos_items")
 public class ItemPedido implements Serializable {
 
+	@Override
+	public String toString() {
+		return "ItemPedido [id=" + id + ", cantidad=" + cantidad + ", producto=" + producto + ", subtotal=" + subtotal
+				+ "]";
+	}
+
 	/**
 	 * 
 	 */

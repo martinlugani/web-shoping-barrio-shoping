@@ -39,12 +39,12 @@ public class Pedido implements Serializable {
 	private Date createAt;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date entrega;
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	private Cliente cliente;
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "pedidos_id")
 	private List<ItemPedido> items;
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	private Comercio comercio;
 	private String estado;
 	
@@ -52,7 +52,7 @@ public class Pedido implements Serializable {
 	@PrePersist
 	public void prePersist() {
 		createAt = new Date();
-		estado = "solicitado";
+		estado = "Solicitado";
 		calculaTotal();
 	}
 	public Long getId() {
