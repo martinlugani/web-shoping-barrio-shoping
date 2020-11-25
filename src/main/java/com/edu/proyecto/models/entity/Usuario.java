@@ -19,7 +19,12 @@ import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.format.annotation.DateTimeFormat;
 
 
@@ -41,11 +46,23 @@ public class Usuario implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@Column(length = 30, unique = true, name = "username")
-	@NotBlank(message = "Por favor ingrese un nombre de usuario")
+	@Size(min = 1, message = "Este campo no puede ser vacio")
 	private String username;
 	@Column(length = 60)
 	@NotBlank(message = "Por favor ingrese un password")
 	private String password;
+	@Transient
+	@NotBlank(message = "No puede estar vacio")
+	private String repeatPass;
+	public String getRepeatPass() {
+		return repeatPass;
+	}
+
+
+
+	public void setRepeatPass(String repeatPass) {
+		this.repeatPass = repeatPass;
+	}
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	@Column(name = "create_at")
@@ -84,7 +101,7 @@ public class Usuario implements Serializable{
 		this.id = id;
 	}
 	public String getNicname() {
-		return username;
+ 		return username;
 	}
 	public void setNicname(String nicname) {
 		this.username = nicname;

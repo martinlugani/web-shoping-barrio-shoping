@@ -4,9 +4,8 @@
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <meta charset="UTF-8" />
 
-
 <head th:fragment="head">
-
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 
 
@@ -30,7 +29,8 @@
 <!-- data tables -->
 
 
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet"
+	href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
 <style type="text/css">
 
 /*table tablapedidos*/
@@ -63,13 +63,20 @@ body {
 
 	<div class="alert alert-success" th:if="${success != null}"
 		th:text="${success}"></div>
-	<div class="alert alert-info" th:if="${info != null}" th:text="${info}"></div>
+	<div class="alert alert-info" th:if="${info != null}"></div>
 	<div class="alert alert-danger" th:if="${error != null}"
 		th:text="${error}"></div>
 	<p class="alert alert-success container-fluid" th:text="${mensaje}">hola</p>
 
 </header>
 
+<div th:fragment="alertas">
+	<div class="alert alert-success" th:if="${success != null}"
+		th:text="${success}"></div>
+	<div class="alert alert-info" th:if="${info != null}" th:text="${info}"></div>
+	<div class="alert alert-danger" th:if="${error != null}"
+		th:text="${error}"></div>
+</div>
 <div class="wrapper">
 
 
@@ -88,6 +95,7 @@ body {
 			<li sec:authorize="!isAuthenticated()"
 				class="nav-item d-none d-sm-inline-block"><a
 				th:href="@{/login}" class="nav-link">Login</a></li>
+
 		</ul>
 
 		<!-- SEARCH FORM -->
@@ -129,9 +137,17 @@ body {
 		<div class="sidebar">
 			<!-- Sidebar user panel (optional) -->
 			<div class="user-panel mt-3 pb-3 mb-3 d-flex">
-				<div class="image">Img usuario</div>
+				<div class="image">
+					<a th:href="@{'/cliente/ver/'}"><img
+						th:if="${session.imagencli != null && #strings.length(session.imagencli)>0}"
+						class="rounded-circle"
+						th:src="@{'/cliente/imagenCliente/'+${session.imagencli}}"
+						th:alt="@{'/cliente/ver/'}" style="width: 100px; height: 100px;">
+					</a>
+				</div>
 				<div class="info">
-					<a href="#" class="d-block">Link datos usuario</a>
+					<a th:href="@{'/cliente/ver/'}" class="d-block"
+						sec:authentication="name">Link datos usuario</a>
 
 				</div>
 			</div>
@@ -216,22 +232,23 @@ body {
 
 
 <footer th:fragment="footer" class="container">
-	<div class="card col-lg-6 col-sm-12">
-		<p>
-			Este proyecto fue desarrollado en IDE Eclipse + Spring Plugins,
-			Thymeleaft , Mysql por Martín Lugani, Luis Cikotic, Ezequiel Ortiz y
-			Nicolas Rios, para la materia Trabajo final a cargo de los profesores
-			.Para la carrera de Lic. en Gestion de Nuevas Técnologias <br /> <small>&copy;
-				En el año 2020 V1.0.0</small> <br />
-		</p>
-		<div sec:authorize="isAuthenticated()">
-			<span>Usuario logeado:</span> <span sec:authentication="name"></span>
-			| <span>Roles:</span> <span
-				sec:authentication="principal.authorities"></span>
+	<div class="row justify-content-lg-center">
+		<div class="  card col-lg-6 col-sm-12">
+			<p>
+				Este proyecto fue desarrollado en IDE Eclipse + Spring Plugins,
+				Thymeleaft , Mysql por Martín Lugani, Luis Cikotic, Ezequiel Ortiz y
+				Nicolas Rios, para la materia Trabajo final a cargo de los
+				profesores .Para la carrera de Lic. en Gestion de Nuevas Técnologias
+				<br /> <small>&copy; En el año 2020 V1.0.0</small> <br />
+			</p>
+			<div sec:authorize="isAuthenticated()">
+				<span>Usuario logeado:</span> <span sec:authentication="name"></span>
+				| <span>Roles:</span> <span
+					sec:authentication="principal.authorities"></span>
+			</div>
+
 		</div>
-
 	</div>
-
 
 	<!-- Optional JavaScript -->
 	<!-- jQuery first, then Bootstrap JS -->
@@ -272,21 +289,21 @@ body {
 	<script th:src="@{/js/jquery.dataTables.js}"></script>
 	<script type="text/javascript"
 		src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
-	
+
 	<script type="text/javascript"
 		src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
-<!-- jsGrid -->
-<script src="../../plugins/jsgrid/demos/db.js"></script>
-<script src="../../plugins/jsgrid/jsgrid.min.js"></script>
+	<!-- jsGrid -->
+	<script src="../../plugins/jsgrid/demos/db.js"></script>
+	<script src="../../plugins/jsgrid/jsgrid.min.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$("#tab").DataTable();
 		});
-		$.extend( $.fn.dataTable.defaults, {
-		    searching: false,
-		    ordering: true,
-		    paging: false
-		} );
+		$.extend($.fn.dataTable.defaults, {
+			searching : false,
+			ordering : true,
+			paging : false
+		});
 	</script>
 	<script type="text/javascript">
 		$(document)
@@ -396,5 +413,7 @@ body {
 			}
 		};
 	</script>
+
+
 </footer>
 </html>

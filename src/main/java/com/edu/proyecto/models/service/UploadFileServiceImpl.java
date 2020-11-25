@@ -23,18 +23,15 @@ public class UploadFileServiceImpl implements IUploadFileService {
 
 	@Override
 	public Resource load(String filename, Long id) throws MalformedURLException {
-		if (id!=null) {
+		if (id != null) {
 			pathComercio = "\\" + id;
+		} else {
+			pathComercio="\\imagenes";
 		}
-		
-		
-		
-		
-		
-		
-		
+
+
 		Path path = getPath(filename);
-		
+
 		log.info("pathFoto: " + path);
 
 		Resource resouce = new UrlResource(path.toUri());
@@ -57,7 +54,13 @@ public class UploadFileServiceImpl implements IUploadFileService {
 	@Override
 	public String copy(MultipartFile file, Long idComercio) throws IOException {
 		String uniqueFilename = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
-		pathComercio = "\\" + idComercio;
+
+		if (idComercio != null) {
+			pathComercio = "\\" + idComercio;
+		} else {
+			pathComercio="\\imagenes";
+		}
+
 		Path rootPath = getPath(uniqueFilename);
 
 		log.info("rootPath: " + rootPath);

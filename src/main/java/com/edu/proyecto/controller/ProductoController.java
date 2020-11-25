@@ -69,7 +69,7 @@ public class ProductoController {
 	@GetMapping(value = "/uploads/{id}/{filename:.+}")
 	public ResponseEntity<Resource> verFoto(@PathVariable(value = "id") Long id,
 			@PathVariable(value = "filename") String filename) {
-
+		log.info("controller producto imagen");
 		Resource recurso = null;
 
 		try {
@@ -146,7 +146,7 @@ public class ProductoController {
 //			if (producto.getId() != null && producto.getId() > 0 && producto.getFotoUrl() != null
 //					&& producto.getFotoUrl().length() > 0) {
 //				uploadFileService.delete(producto.getFotoUrl());
-//			}
+//			} HTTPsesion y despues sesion.
 			String uniqueFilename = null;
 			try {
 				uniqueFilename = uploadFileService.copy(foto, comercioId);

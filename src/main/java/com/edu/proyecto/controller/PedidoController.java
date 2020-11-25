@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -84,7 +85,9 @@ public class PedidoController {
 
 	@GetMapping("/{id}")
 	public String obtenerProductoComercio(@PathVariable(value = "id") Long comercioId, Model model,
-			HttpServletRequest request, Authentication auth) {
+			HttpServletRequest request, Authentication auth, HttpSession session) {
+		
+		session.setAttribute("valor", false);
 		List<Producto> productos = productoService.findAllByComercioIdOrderByNombre(comercioId);
 		model.addAttribute("comercio", comercioId);
 		if (request.isUserInRole("ROLE_CLIENTE")) {

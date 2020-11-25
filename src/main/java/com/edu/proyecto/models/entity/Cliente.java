@@ -23,7 +23,7 @@ public class Cliente extends Usuario {
 
 	@Override
 	public String toString() {
-		return "Cliente [id=" + ", email=" + email + ", pedidos=" + pedidos + "]";
+		return "Cliente [id=" + ", email=" + email + ", pedidos=" + pedidos + "]"+super.toString();
 	}
 
 	/**
@@ -36,6 +36,15 @@ public class Cliente extends Usuario {
 	private String email;
 	@OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Pedido> pedidos;
+	private String imagen;
+
+	public String getImagen() {
+		return imagen;
+	}
+
+	public void setImagen(String imagen) {
+		this.imagen = imagen;
+	}
 
 	public Cliente() {
 		// TODO Auto-generated constructor stub
