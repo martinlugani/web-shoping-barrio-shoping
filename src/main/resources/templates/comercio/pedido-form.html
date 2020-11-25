@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<meta charset="UTF-8" />
+<head th:replace="layout/layout :: head"></head>
+<body>
+
+	<nav th:replace="layout/layout :: nav-up"></nav>
+	<aside th:replace="layout/layout :: nav-left"></aside>
+	<div class="content-wrapper">
+		<div class="container py-4">
+
+			<div class="card bg-dark text-white">
+				<div class="card-header">Pedido</div>
+				<div class="card-body">
+					<form th:action="@{/pedido/modificar/}+${pedido.id}"
+						th:object="${pedido}" method="post" enctype="multipart/form-data">
+						<input type="hidden" th:value="${pedido.id}"
+							th:field="${pedido.id}" name="id" /> <input type="hidden"
+							th:value="${pedido.cliente.id}" th:name="clienteId" />
+
+						<div class="form-group row">
+							<label for="nombre" class="col-sm-2 col-form-label">Nombre
+								del cliente</label>
+							<div class="col-sm-6">
+								<label th:text="${pedido.cliente.nicname}"
+									th:field="${pedido.cliente.nicname}"></label>
+
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="nombre" class="col-sm-2 col-form-label">E-mail</label>
+							<div class="col-sm-6">
+								<label th:text="${pedido.cliente.email}"
+									th:field="${pedido.cliente.email}"></label>
+
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="nombre" class="col-sm-2 col-form-label">Fecha
+								de pedido</label>
+							<div class="col-sm-6">
+								<label th:text="${pedido.createAt}"
+									th:field="${pedido.createAt}"></label>
+
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="nombre" class="col-sm-2 col-form-label">Estado
+								del pedido</label>
+							<div class="btn-group dropright">
+
+								<a class="nav-item dropdown show mx-2"> <select
+									th:field="*{estado}" id="estado"
+									class="form-control-dark bg-dark" th:name="status">
+
+										<option th:each="estadoe :${estados}" class="bg-dark"
+											th:text="${estadoe}" th:value="${estadoe}"></option>
+
+								</select></a>
+							</div>
+						</div>
+						<div class="form-group row">
+							<table class="table table-sm table-striped table-dark">
+								<thead>
+									<tr>
+										<th scope="col">Item</th>
+										<th scope="col">Nombre del producto</th>
+										<th scope="col">Cantidad</th>
+										<th scope="col">Precio Unitario</th>
+										<th scope="col">Subtotal</th>
+									</tr>
+								</thead>
+								<tbody th:each="item,iterador :${pedido.items}">
+									<tr>
+										<th scope="row" th:text="${iterador.index}+1">1</th>
+										<td th:text="${item.producto.nombre}">Mark</td>
+										<td th:text="${item.cantidad}">Otto</td>
+										<td th:text="${item.subtotal}/${item.cantidad}">@mdo</td>
+										<td th:text="${item.subtotal}"></td>
+									</tr>
+
+								</tbody>
+								<tfoot>
+									<tr>
+										<th scope="row"><label for="nombre">Total </label></th>
+										<td colspan="2"></td>
+										<td></td>
+										<td th:text="${pedido.total}">@twitter</td>
+									</tr>
+								</tfoot>
+
+							</table>
+
+
+
+						</div>
+
+
+
+
+						<div class="form-group row">
+
+							<div class="col-sm-6">
+								<input type="submit" value="Guardar " class="btn btn-secondary" />
+							</div>
+							<div class="col-sm-6">boton regresar</div>
+						</div>
+
+					</form>
+				</div>
+			</div>
+		</div>
+		<footer th:replace="layout/layout :: footer"></footer>
+	</div>
+
+</body>
+
+
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+	<script type="text/javascript" th:fragment="javascript">
+		jQuery('input[type=file]').change(function() {
+
+			console.log("Entro aca");
+
+			var filename = jQuery(this).val().split('\\').pop();
+			var idname = jQuery(this).attr('id');
+			console.log(jQuery(this));
+			console.log(filename);
+			console.log(idname);
+			jQuery('span.' + idname).next().find('span').html(filename);
+		});
+
+		
+		function preview() {
+		    frame.src=URL.createObjectURL(event.target.files[0]);
+		}
+	</script>
+</body>
+</html>

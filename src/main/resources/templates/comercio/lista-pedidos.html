@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<meta charset="UTF-8" />
+
+<head th:replace="layout/layout :: head"></head>
+<body class="hold-transition sidebar-mini">
+
+
+
+	<div class="wrapper">
+		<nav th:replace="layout/layout :: nav-up"></nav>
+		<aside th:replace="layout/layout :: nav-left"></aside>
+
+		<div class="content-wrapper">
+			<div class="container py-4 ">
+
+
+				<div class="card bg-dark text-white ">
+					<div class="card-header">
+						<h5>Pedidos</h5>
+
+					</div>
+
+					<div class="card-body  ">
+
+
+
+						<table id="tab"
+							class="table table-hover table-responsive table-dark "
+							style="width: 100%">
+							<thead>
+								<tr>
+
+									<th>Fecha Creación</th>
+									<th>Cliente</th>
+									<th>Email</th>
+									<th>Suma total</th>
+									<th>Estado de preparacion</th>
+									<th>Ver pedido</th>
+
+								</tr>
+							</thead>
+							<tbody th:each="pedido : ${pedidos}">
+								<tr>
+									<td th:text="${pedido.createAt}"></td>
+
+									<td th:text="${pedido.cliente.nicname}"></td>
+									<td th:text="${pedido.cliente.email}"></td>
+									<td th:text="${pedido.total}"></td>
+									<td th:text="${pedido.estado}"></td>
+									<td><a class="btn btn-dark btn-xs"
+										th:href="@{/pedido/ver/} + ${pedido.id}" th:text="'Ver pedido'"></a>
+									</td>
+
+								</tr>
+							</tbody>
+						</table>
+
+
+
+					</div>
+
+				</div>
+			</div>
+			<footer th:replace="layout/layout :: footer"> </footer>
+		</div>
+
+	</div>
+
+
+
+
+
+	<div sec:authorize="hasRole('ROLE_COMERCIO')">Esto es una prueva
+	</div>
+
+
+
+</body>
+
+
+
+
+
+</html>
