@@ -1,19 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	>
 <meta charset="UTF-8" />
 
 <head th:replace="layout/layout :: head"></head>
-<body class="hold-transition sidebar-mini">
-
-	
-
+<body >
 	<div class="wrapper">
 		<nav th:replace="layout/layout :: nav-up"></nav>
 		<aside th:replace="layout/layout :: nav-left"></aside>
-		
+
 		<div class="content-wrapper">
-		<div th:replace="layout/layout :: alertas"></div>
+			<div th:replace="layout/layout :: alertas"></div>
 			<div class="container py-4 ">
 
 
@@ -65,7 +62,7 @@
 
 
 					</div>
-
+					
 				</div>
 			</div>
 			<footer th:replace="layout/layout :: footer"> </footer>
@@ -77,9 +74,7 @@
 
 
 
-	<div sec:authorize="hasRole('ROLE_COMERCIO')">Esto es una prueva
-	</div>
-
+	
 
 
 </body>

@@ -12,7 +12,7 @@
 				<div class="card bg-dark text-white row col col-lg-12">
 
 
-					<form th:action="@{/cliente/form}" th:object="${cliente}"
+					<form th:action="@{/comercio/form}" th:object="${cliente}"
 						method="post" enctype="multipart/form-data">
 
 						<div class="col-lg-12 ">
@@ -24,12 +24,12 @@
 								<img
 									th:if="${session.imagencli != false && #strings.length(session.imagencli)>0}"
 									class="rounded-circle    img-thumbnail mr-3 mt-3 "
-									th:src="@{'/cliente/imagenCliente/'+${session.imagencli}}"
-									th:alt="@{'/cliente/ver/'}"
+									th:src="@{'/uploads/'+${session.imagencli}}"
+									th:alt="@{'/comercio/ver/'}"
 									style="width: 200px; height: 200px;" id="frame"> <img
 									th:if="${#strings.length(session.imagencli)==0}"
 									th:src="@{'/images/uno.jpg'}"
-									class="rounded-circle    img-thumbnail mr-3 mt-3 " alt="esta"
+									class="rounded-circle    img-thumbnail mr-3 mt-3 " alt="..."
 									id="frame" style="width: 200px; height: 200px;">
 
 
@@ -39,10 +39,12 @@
 
 							<div
 								class="d-flex  justify-content-lg-center justify-content-md-center justify-content-sm-center align-items-center">
-								<div class="h-30 btn-group-vertical  col-form-label align-self-center">
+								<div
+									class="h-30 btn-group-vertical  col-form-label align-self-center">
 									<span class="btn btn-success btn-file">Cambia Imagen<input
 										type="file" name="file" accept="image/*"
-										class="btn btn-danger col-Lg-3 col-md-9 col-sm-12" id="imgInp" onchange="preview()" /></span>
+										class="btn btn-danger col-Lg-3 col-md-9 col-sm-12" id="imgInp"
+										onchange="preview()" /></span>
 
 
 
@@ -58,7 +60,9 @@
 									<h4 th:text="${titulo}"></h4>
 
 
-
+									<input type="hidden" th:field="*{id}" class="form-control"
+										th:errorclass="'form-control alert-danger'"
+										 />
 									<div class="form-group row">
 										<label for="nicname"
 											class="col-Lg-6 col-md-6 col-sm-9 col-form-label">Nombre
@@ -67,6 +71,34 @@
 											<input type="text" th:field="*{nicname}" class="form-control"
 												th:errorclass="'form-control alert-danger'"
 												disabled='disabled' />
+										</div>
+									</div>
+									<div class="form-group row">
+										<label for="razonSocial"
+											class="col-Lg-6 col-md-6 col-sm-9 col-form-label">Razon
+											Social</label>
+										<div class="col-Lg-6 col-md-9 col-sm-9">
+											<input type="text" th:field="*{razonSocial}"
+												class="form-control"
+												th:errorclass="'form-control alert-danger'" />
+										</div>
+									</div>
+									<div class="form-group row">
+										<label for="razonSocial"
+											class="col-Lg-6 col-md-6 col-sm-9 col-form-label">Dirección</label>
+										<div class="col-Lg-6 col-md-9 col-sm-9">
+											<input type="text" th:field="*{direccion}"
+												class="form-control"
+												th:errorclass="'form-control alert-danger'" />
+										</div>
+									</div>
+									<div class="form-group row">
+										<label for="razonSocial"
+											class="col-Lg-6 col-md-6 col-sm-9 col-form-label">Descripción</label>
+										<div class="col-Lg-6 col-md-9 col-sm-9">
+											<input type="text" th:field="*{descripcion}"
+												class="form-control"
+												th:errorclass="'form-control alert-danger'" />
 										</div>
 									</div>
 									<div class="form-group row">

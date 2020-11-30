@@ -90,6 +90,7 @@ public class PedidoController {
 		session.setAttribute("valor", false);
 		List<Producto> productos = productoService.findAllByComercioIdOrderByNombre(comercioId);
 		model.addAttribute("comercio", comercioId);
+//		log.info("pedido dat" .concat(session.getAttribute("imagencli").toString()));
 		if (request.isUserInRole("ROLE_CLIENTE")) {
 			Pedido pedido = new Pedido();
 

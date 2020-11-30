@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<meta charset="UTF-8" />
+ <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <head th:replace="layout/layout :: head"></head>
 
 <body class="hold-transition sidebar-mini">
@@ -9,6 +11,7 @@
 		<aside th:replace="layout/layout :: nav-left"></aside>
 
 		<div class="content-wrapper">
+			<div th:replace="layout/layout :: alertas"></div>
 			<div class="container py-4 ">
 
 				<div class="card bg-dark text-white ">
@@ -87,7 +90,7 @@
 					<div th:replace="producto/carrito :: tableCarrito"></div>
 
 				</div>
-				<footer th:replace="layout/layout :: footer"></footer>
+				<footer th:replace="layout/layout :: footer" ></footer>
 			</div>
 
 
@@ -99,4 +102,5 @@
 
 
 </body>
+<section th:replace="layout/layout :: script"></section>
 </html>
