@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-	>
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <meta charset="UTF-8" />
 
 <head th:fragment="head">
@@ -119,10 +118,11 @@ body {
 				</form>
 
 
-				<li class="nav-item"><a class="btn btn-outline-primary"
-					th:href="@{/cliente/form}" sec:authorize="!isAuthenticated()">Registar
-						usuario <ion-icon name="person-outline"></ion-icon>
-				</a></li>
+
+				<li sec:authorize="!isAuthenticated()"
+					class="nav-item d-none d-sm-inline-block"><a
+					th:href="@{/cliente/form}" class="nav-link">Registrar Usuario <ion-icon
+							name="person-outline"></ion-icon></a></li>
 			</ul>
 		</nav>
 		<!-- /.navbar -->
@@ -169,7 +169,8 @@ body {
 							th:if="${#strings.length(session.imagencli)==0} "
 							class="rounded-circle" th:src="@{'/images/uno.jpg'}"
 							th:alt="uno.jpg" style="width: 100px; height: 100px;">
-							Logueate </a>
+							Logueate</a>
+
 					</div>
 
 					<div class="info" sec:authorize="hasRole('ROLE_CLIENTE')">
@@ -178,100 +179,71 @@ body {
 
 					</div>
 					<div class="info" sec:authorize="hasRole('ROLE_COMERCIO')">
-						<a th:href="@{'/comercio/ver/'}" class="d-block"
-							sec:authentication="name">Link datos usuario</a>
+						<a th:href="@{'/comercio/ver/'}" class="d-block stretched-link"
+							sec:authentication="name">Link datos usuario <br>
 
+						</a>
+						<p>
+							<span class="right badge badge-danger">Ver/Modificar</span>
+						</p>
 					</div>
 					<!-- 				</section> -->
 				</div>
 
 				<!-- Sidebar Menu -->
 
-				<nav class="mt-2">
-					<ul class="nav nav-pills nav-sidebar flex-column"
-						data-widget="treeview" role="menu" data-accordion="false">
-						<!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
-						<li class="nav-item has-treeview menu-open"><a href="#"
-							class="nav-link active"> <i
-								class="nav-icon fas fa-tachometer-alt"></i>
-								<p>
-									Starter Pages <i class="right fas fa-angle-left"></i>
-								</p>
-						</a>
-							<ul class="nav nav-treeview">
-								<li class="nav-item"><a href="#" class="nav-link active">
-										<i class="far fa-circle nav-icon"></i>
-										<p>Active Page</p>
-								</a></li>
-								<li class="nav-item"><a href="#" class="nav-link"> <i
-										class="far fa-circle nav-icon"></i>
-										<p>Inactive Page</p>
-								</a></li>
-							</ul></li>
-						<li class="nav-item"><a href="#" class="nav-link"> <i
-								class="nav-icon fas fa-th"></i>
-								<p>
-									Simple Link <span class="right badge badge-danger">New</span>
-								</p>
-						</a></li>
-					</ul>
+				<nav class="mt-2" sec:authorize="hasRole('ROLE_COMERCIO')">
+					<div class="user-panel">
+						<ul class="nav nav-pills nav-sidebar flex-column"
+							data-widget="treeview" role="menu" data-accordion="false">
+							<li class="nav-item"><a th:href="@{/pedido/lista}"
+								class="nav-link"> <i class="nav-icon fas fa-cart-arrow-down"></i>
+									<p>
+										Pedidos <span class="right badge badge-primary">Ver </span>
+									</p>
+							</a></li>
+
+
+
+						</ul>
+						<ul class="nav nav-pills nav-sidebar flex-column"
+							data-widget="treeview" role="menu" data-accordion="false">
+							<li class="nav-item"><a th:href="@{/productos/form/}"
+								class="nav-link"> <i class="nav-icon fas fa-box-open"></i>
+									<p>
+										Producto<span class="right badge badge-primary">Crear</span>
+									</p>
+							</a></li>
+
+
+
+						</ul>
+					</div>
+				</nav>
+				<nav class="mt-2" sec:authorize="hasRole('ROLE_CLIENTE')">
+					<div class="user-panel">
+						<ul class="nav nav-pills nav-sidebar flex-column"
+							data-widget="treeview" role="menu" data-accordion="false">
+							<li class="nav-item"><a th:href="@{/pedido/lista/cliente}"
+								class="nav-link"> <i class="nav-icon fas fa-cart-arrow-down"></i>
+									<p>
+										Pedidos <span class="right badge badge-primary">Ver </span>
+									</p>
+							</a></li>
+
+
+
+						</ul>
+					</div>
 				</nav>
 
 
-
-				<!-- 	<nav class="mt-2">
-
-
-
-
-
-
-				<li sec:authorize="hasRole('ROLE_CLIENTE')"
-					class="nav-item has-treeview"><a href="#" class="nav-link">
-						<i class="nav-icon fas fa-tachometer-alt"></i>
-						<p>
-							Pedidos pendientes <i class="right fas fa-angle-left"></i>
-						</p>
-				</a>
-					<ul class="nav nav-treeview">
-						<li class="nav-item"><a
-							th:href="@{/productos/form/}+ ${comercio}" class="nav-link">
-								<i class="far fa-circle nav-icon"></i>
-								<p>Pedidos</p>
-						</a></li>
-
-
-						<li sec:authorize="hasRole('ROLE_COMERCIO')" class="nav-item"><a
-							th:href="@{/productos/form/}+ ${comercio}" class="nav-link">
-								<ion-icon name="albums-outline"></ion-icon>
-								<p>Registrar Producto</p>
-						</a></li>
-						<li sec:authorize="hasRole('ROLE_COMERCIO')" class="nav-item"><a
-							th:href="@{/pedido/lista}" class="nav-link"> <ion-icon
-									name="albums-outline"></ion-icon>
-								<p>Lista pedidos</p>
-						</a></li>
-
-
-
-					</ul>
-			</nav> -->
 				<!-- /.sidebar-menu -->
 			</div>
 			<!-- /.sidebar -->
 		</aside>
 
 
-
-		<!-- Control Sidebar -->
-		<!-- <aside class="control-sidebar control-sidebar-dark">
-		Control sidebar content goes here
-		<div class="p-3">
-			<h5>Title</h5>
-			<p>Sidebar content</p>
-		</div>
-	</aside> -->
 
 
 		<!-- ./wrapper -->
@@ -318,7 +290,7 @@ body {
 
 		<!-- 	<script th:src="@{/js/popper.min.js}"></script> -->
 		<!-- 	<script th:src="@{/js/bootstrap.min.js}"></script> -->
-	
+
 		<!-- jsGrid -->
 		<!-- <script src="../../plugins/jsgrid/demos/db.js"></script>
 	<script src="../../plugins/jsgrid/jsgrid.min.js"></script> -->
@@ -449,7 +421,7 @@ body {
 				}
 			};
 		</script>
-			<script th:src="@{/js/jquery-ui.min.js}"></script>
+		<script th:src="@{/js/jquery-ui.min.js}"></script>
 
 		<script
 			src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -485,7 +457,7 @@ body {
 			src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
 		<script
 			src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-			<th:block layout:fragment="scripts"></th:block>
+		<th:block layout:fragment="scripts"></th:block>
 	</footer>
 </body>
 </html>

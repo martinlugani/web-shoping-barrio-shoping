@@ -118,7 +118,7 @@ public class ClienteController {
 		if (validarCliente(cliente)) {
 
 			if (modificaCliente(cliente, foto)) {
-				flash.addFlashAttribute("sussess", "Se ha actualizado el usuario");
+				flash.addFlashAttribute("success", "Se ha actualizado el usuario");
 			} else {
 				flash.addFlashAttribute("error", "No se han actualizado los cambios");
 				return "redirect:/";

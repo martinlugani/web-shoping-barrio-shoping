@@ -49,8 +49,11 @@
 									<td th:text="${pedido.cliente.email}"></td>
 									<td th:text="${pedido.total}"></td>
 									<td th:text="${pedido.estado}"></td>
-									<td><a class="btn btn-dark btn-xs"
+									<td sec:authorize="hasRole('ROLE_COMERCIO')"><a class="btn btn-dark btn-xs"
 										th:href="@{/pedido/ver/} + ${pedido.id}" th:text="'Ver pedido'"></a>
+									</td>
+									<td sec:authorize="hasRole('ROLE_CLIENTE')"><a class="btn btn-dark btn-xs"
+										th:href="@{/pedido/cliente/ver/} + ${pedido.id}" th:text="'Ver pedido'"></a>
 									</td>
 
 								</tr>

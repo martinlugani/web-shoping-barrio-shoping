@@ -84,16 +84,16 @@ public class ProductoController {
 	}
 
 	@Secured({ "ROLE_COMERCIO" })
-	@RequestMapping(value = "/form/{comercioId}")
-	public String crear(@PathVariable(value = "comercioId") Long comercioId, Model model, RedirectAttributes flash) {
+	@RequestMapping(value = "/form/")
+	public String crear( Model model, RedirectAttributes flash, Authentication auth) {
 
-		Comercio comercio = comercioService.findById(comercioId);
+		Comercio comercio = comercioService.findByUsername(auth.getName());
 		Producto producto = new Producto();
 		producto.setComercio(comercio);
 		List<UnidadMedida> medidas = productoService.findAllMedida();
 //		flash.addFlashAttribute("mensage", "1");
 		producto.setState(true);
-		model.addAttribute("comercio", comercioId);
+		model.addAttribute("comercio", comercio.getId());
 		model.addAttribute("mensaje", "Solo a efectos de desarrollo 1".concat(comercio.toString()));
 		model.addAttribute("producto", producto);
 		model.addAttribute("medidas", medidas);

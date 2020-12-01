@@ -44,12 +44,29 @@
 
 							</div>
 						</div>
-						<div class="form-group row">
+						<div class="form-group row"
+							sec:authorize="hasRole('ROLE_COMERCIO')">
 							<label for="nombre" class="col-sm-2 col-form-label">Estado
 								del pedido</label>
 							<div class="btn-group dropright">
 
 								<a class="nav-item dropdown show mx-2"> <select
+									th:field="*{estado}" id="estado"
+									class="form-control-dark bg-dark" th:name="status">
+
+										<option th:each="estadoe :${estados}" class="bg-dark"
+											th:text="${estadoe}" th:value="${estadoe}"></option>
+
+								</select></a>
+							</div>
+						</div>
+						<div class="form-group row"
+							sec:authorize="hasRole('ROLE_CLIENTE')">
+							<label for="nombre" class="col-sm-2 col-form-label">Estado
+								del pedido</label>
+							<div class="btn-group dropright">
+								<label for="nombre" class="col-sm-2 col-form-label">Estado
+									del pedido</label> <a class="nav-item dropdown show mx-2"> <select
 									th:field="*{estado}" id="estado"
 									class="form-control-dark bg-dark" th:name="status">
 
