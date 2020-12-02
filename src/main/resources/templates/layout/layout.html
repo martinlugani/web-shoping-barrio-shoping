@@ -99,7 +99,7 @@ body {
 							name="alert-outline"></ion-icon></a></li>
 				<li sec:authorize="!isAuthenticated()"
 					class="nav-item d-none d-sm-inline-block"><a
-					th:href="@{/login}" class="nav-link">Login</a></li>
+					th:href="@{/login}" class="nav-link">Ingresar</a></li>
 
 			</ul>
 
@@ -172,7 +172,7 @@ body {
 							th:if="${#strings.length(session.imagencli)==0} "
 							class="rounded-circle" th:src="@{'/images/uno.jpg'}"
 							th:alt="uno.jpg" style="width: 100px; height: 100px;">
-							Logueate</a>
+							Ingresar</a>
 
 					</div>
 
@@ -271,15 +271,13 @@ body {
 			<div class="  card col-lg-6 col-sm-12">
 				<p>
 					Este proyecto fue desarrollado en IDE Eclipse + Spring Plugins,
-					Thymeleaft , Mysql por Martín Lugani, Luis Cikotic, Ezequiel Ortiz
-					y Nicolas Rios, para la materia Trabajo final a cargo de los
-					profesores .Para la carrera de Lic. en Gestion de Nuevas
-					Técnologias <br /> <small>&copy; En el año 2020 V1.0.0</small> <br />
+					Thymeleaft y Mysql por Martín Lugani, Luis Cikotic, Ezequiel Ortiz
+					y Nicolás Rios, para la materia Trabajo final. De la carrera  
+					Licenciatura en Gestión de Tecnologías <br /> <small>&copy; En el año 2020 V1.0.0</small> <br />
 				</p>
 				<div sec:authorize="isAuthenticated()">
-					<span>Usuario logeado:</span> <span sec:authentication="name"></span>
-					| <span>Roles:</span> <span
-						sec:authentication="principal.authorities"></span>
+					<span>Usuario logueado:</span> <span sec:authentication="name"></span>
+					|
 				</div>
 
 			</div>
