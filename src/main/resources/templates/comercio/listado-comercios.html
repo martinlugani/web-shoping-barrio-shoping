@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	>
+<html xmlns:th="http://www.thymeleaf.org">
 <meta charset="UTF-8" />
 
 <head th:replace="layout/layout :: head"></head>
-<body >
+<body>
 	<div class="wrapper">
 		<nav th:replace="layout/layout :: nav-up"></nav>
 		<aside th:replace="layout/layout :: nav-left"></aside>
@@ -37,13 +36,13 @@
 										th:alt="${comercio.image}"> <img
 										th:if="${comercio.image == null} "
 										th:src="@{images/image-not-found.png}" class="card-img-top"
-										alt="...">
-									<div class="card-body">
+										alt="..." style="width: 100%; height: 40%;">
+									<div class="card-body " style="width: 100%; height: 40%;">
 										<h4 class="card-title" th:text="${comercio.razonSocial}">Card
 											title</h4>
-										<p class="card-text" th:text="${comercio.descripcion}"
-											th:if="${comercio.descripcion != null }">Descripcion del
-											comercio</p>
+										<p class="card-text " th:text="${comercio.descripcion}"
+											th:if="${comercio.descripcion != null }">Descripcion
+											del comercio</p>
 										<p class="card-text" th:if="${comercio.descripcion == null }">Este
 											comercio no tiene descripción</p>
 									</div>
@@ -62,19 +61,45 @@
 
 
 					</div>
-					
+
 				</div>
+				<footer th:replace="layout/layout :: footer"> </footer>
 			</div>
-			<footer th:replace="layout/layout :: footer"> </footer>
+
 		</div>
 
 	</div>
 
+	<script type="text/javascript">
+		$(document)
+				.ready(
+						function() {
+							$("#myBuscador")
+									.on(
+											"keyup",
+											function() {
+												console.log("entra esn key");
+												var value = $(this).val()
+														.toLowerCase();
+												$("#card section")
+														.filter(
+																function() {
+																	$(this)
+																			.toggle(
+																					$(
+																							this)
+																							.text()
+																							.toLowerCase()
+																							.indexOf(
+																									value) > -1)
+																});
+											});
+						});
+	</script>
 
 
 
 
-	
 
 
 </body>

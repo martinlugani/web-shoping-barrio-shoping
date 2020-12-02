@@ -41,7 +41,7 @@ import com.edu.proyecto.models.service.IUploadFileService;
 import com.sun.xml.bind.v2.runtime.output.Encoded;
 
 @Controller
-@SessionAttributes("cliente")
+
 @RequestMapping("/cliente")
 public class ClienteController {
 
@@ -74,11 +74,11 @@ public class ClienteController {
 	}
 
 	@RequestMapping(value = "/form")
-	public String crear(Map<String, Object> model, RedirectAttributes flash) {
+	public String crear(Model model, RedirectAttributes flash) {
 
 		Cliente cliente = new Cliente();
-
-		model.put("cliente", cliente);
+		model.addAttribute("imagencli", "");
+		model.addAttribute("cliente", cliente);
 
 		return "form";
 	}
@@ -146,6 +146,8 @@ public class ClienteController {
 			// TODO: handle exception
 			log.error("Error  " + e.getMessage());
 			model.addAttribute("dupliErr", e.getMessage());
+			model.addAttribute("result", result);
+			log.error("Error  "+ result.toString());
 			return "form";
 		}
 		flash.addFlashAttribute("success", "El cliente se ha creado con exito");

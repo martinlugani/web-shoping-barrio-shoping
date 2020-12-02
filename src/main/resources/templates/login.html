@@ -2,16 +2,27 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <meta charset="UTF-8" />
 <head th:replace="layout/layout :: head"></head>
+<link rel="icon" type="image/png" th:href="@{/images/vase.png}" />
+<style type="text/css">
+.logcont {
+	margin-top: 80px;
+}
+</style>
 <body>
 
+
+
+
+
 	<div th:replace="layout/layout :: alertas"></div>
-	<div
-		class=" row col justify-content-center">
+	<div class=" row col justify-content-center logcont">
 
 
 		<div
 			class="card text-center bg-dark text-white  row col-lg-6 col-md-6 col-sm-6">
-			<div class="card-header">Por favor logueate!</div>
+			<div class="card-header">
+				<h4>Por favor logueate!</h4>
+			</div>
 			<div class="card-body">
 				<div class="row justify-content-center align-items-center ">
 					<div class="col-Lg-3 col-md-9 col-sm-12">
@@ -26,7 +37,8 @@
 
 								<div class="form-group ">
 									<label for="nicname"
-										class="col-Lg-6 col-md-6 col-sm-9 col-form-label">Contraseña										de usuario</label> <input type="password" name="password"
+										class="col-Lg-6 col-md-6 col-sm-9 col-form-label">Contraseña
+										de usuario</label> <input type="password" name="password"
 										id="password" class="form-control" required />
 								</div>
 

@@ -46,7 +46,7 @@ public class Usuario implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@Column(length = 30, unique = true, name = "username")
-	@Size(min = 1, message = "Este campo no puede ser vacio")
+	@NotBlank()
 	private String username;
 	@Column(length = 60)
 	@NotBlank(message = "Por favor ingrese un password")

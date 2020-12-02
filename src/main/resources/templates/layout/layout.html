@@ -6,7 +6,7 @@
 
 <head th:fragment="head">
 
-
+<link rel="icon" type="image/png" th:href="@{/images/vase.png}" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title th:text="'Shoping Barrio'"></title>
@@ -54,6 +54,9 @@ body {
 .anyClass {
 	height: 500px;
 	overflow-y: scroll;
+	padding-top: 30px;
+	padding-left: 5px;
+	padding-right: 8px;
 }
 </style>
 </head>
@@ -314,6 +317,8 @@ body {
 										.on(
 												"keyup",
 												function() {
+													console
+															.log("entra esn key");
 													var value = $(this).val()
 															.toLowerCase();
 													$("#card section")
