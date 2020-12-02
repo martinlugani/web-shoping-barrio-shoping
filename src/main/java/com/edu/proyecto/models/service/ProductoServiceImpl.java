@@ -80,6 +80,12 @@ public class ProductoServiceImpl implements IProductoServices {
 		productoDao.delete(productoDao.findById(id).orElse(null));
 	}
 
+	@Override
+	public Producto findByFotoURL(String filename) {
+		Producto producto=productoDao.findByFotoUrl(filename).get(0);
+		return producto ;
+	}
+
 	
 
 }

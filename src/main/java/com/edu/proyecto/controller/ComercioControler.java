@@ -40,9 +40,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.edu.proyecto.models.entity.Cliente;
 import com.edu.proyecto.models.entity.Comercio;
+import com.edu.proyecto.models.entity.Producto;
 import com.edu.proyecto.models.entity.Role;
 import com.edu.proyecto.models.service.IClienteService;
 import com.edu.proyecto.models.service.IComercioService;
+import com.edu.proyecto.models.service.IProductoServices;
 import com.edu.proyecto.models.service.IUploadFileService;
 
 @Controller
@@ -56,6 +58,8 @@ public class ComercioControler {
 	private IUploadFileService uploadFileService;
 	@Autowired
 	private IClienteService clienteService;
+	@Autowired
+	private IProductoServices productoService;
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 	private Comercio comercio;
@@ -194,6 +198,14 @@ public class ComercioControler {
 	@GetMapping(value = "/uploads/{filename:.+}")
 	public ResponseEntity<Resource> verFoto(@PathVariable(value = "filename") String filename) {
 		comercio=comercioService.findByImage(filename);
+		if (comercio==null) {
+			
+			
+			
+			Producto prod=productoService.findByFotoURL(filename);
+			comercio=comercioService.findById(prod.getComercio().getId());
+			
+		}
 		Resource recurso = null;
 		try {
 			recurso = uploadFileService.load(filename, comercio.getId());

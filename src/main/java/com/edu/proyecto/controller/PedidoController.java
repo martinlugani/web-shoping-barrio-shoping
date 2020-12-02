@@ -98,11 +98,17 @@ public class PedidoController {
 			model.addAttribute("pedido", pedido);
 		}
 		Pedido pedido = new Pedido();
+		List<Producto> proFiltrado = new ArrayList<Producto>();
 
+		for (Producto producto : productos) {
+			if (producto.getState()) {
+				proFiltrado.add(producto);
+			}
+		}
 		model.addAttribute("pedido", pedido);
 
 		System.out.println(productos);
-		model.addAttribute("productos", productos);
+		model.addAttribute("productos", proFiltrado);
 
 		return "producto/listado-productos";
 //		return "pruevas";

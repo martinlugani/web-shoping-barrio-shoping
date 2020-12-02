@@ -33,8 +33,10 @@
 								<tr>
 
 									<th>Fecha Creación</th>
-									<th>Cliente</th>
-									<th>Email</th>
+									<th sec:authorize="hasRole('ROLE_COMERCIO')">Cliente</th>
+									<th sec:authorize="hasRole('ROLE_COMERCIO')">Email</th>
+									<th sec:authorize="hasRole('ROLE_CLIENTE')">Comercio</th>
+									<th sec:authorize="hasRole('ROLE_CLIENTE')">Email</th>
 									<th>Suma total</th>
 									<th>Estado de preparacion</th>
 									<th>Ver pedido</th>
@@ -45,8 +47,10 @@
 								<tr th:if="${pedido.entrega}==null ">
 									<td th:text="${pedido.createAt}" ></td>
 
-									<td th:text="${pedido.cliente.nicname}"></td>
-									<td th:text="${pedido.cliente.email}"></td>
+									<td th:text="${pedido.cliente.nicname}"sec:authorize="hasRole('ROLE_COMERCIO')"></td>
+									<td th:text="${pedido.comercio.nicname}"sec:authorize="hasRole('ROLE_CLIENTE')"></td>
+									<td th:text="${pedido.cliente.email}" sec:authorize="hasRole('ROLE_COMERCIO')"></td>
+									<td th:text="${pedido.comercio.email}" sec:authorize="hasRole('ROLE_CLIENTE')"></td>
 									<td th:text="${pedido.total}"></td>
 									<td th:text="${pedido.estado}"></td>
 									<td sec:authorize="hasRole('ROLE_COMERCIO')"><a class="btn btn-dark btn-xs"

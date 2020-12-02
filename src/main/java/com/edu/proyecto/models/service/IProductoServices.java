@@ -23,4 +23,6 @@ public interface IProductoServices {
 	public Producto findById(Long id);
 	
 	public void delete(Long id);
+
+	public Producto findByFotoURL(String filename);
 }

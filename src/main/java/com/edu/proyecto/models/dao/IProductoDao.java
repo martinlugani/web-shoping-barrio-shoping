@@ -10,6 +10,8 @@ import com.edu.proyecto.models.entity.Producto;
 public interface IProductoDao extends CrudRepository<Producto, Long> {
 	public List<Producto> findAllByComercioIdOrderByNombre(Long idComercio);
 	
+	public List<Producto> findByFotoUrl(String fotoUrl);
+	
 	
 	
 }
