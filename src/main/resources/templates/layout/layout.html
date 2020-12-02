@@ -174,9 +174,11 @@ body {
 					</div>
 
 					<div class="info" sec:authorize="hasRole('ROLE_CLIENTE')">
-						<a th:href="@{'/cliente/ver/'}" class="d-block"
+						<a th:href="@{'/cliente/ver/'}" class="d-block stretched-link"
 							sec:authentication="name">Link datos usuario</a>
-
+						<p>
+							<span class="right badge badge-danger">Ver/Modificar</span>
+						</p>
 					</div>
 					<div class="info" sec:authorize="hasRole('ROLE_COMERCIO')">
 						<a th:href="@{'/comercio/ver/'}" class="d-block stretched-link"
@@ -382,6 +384,7 @@ body {
 						});
 
 					});
+			var total1 = 0;
 			var itemsHelper = {
 				calcularImporte : function(id, precio, cantidad) {
 					$("#total_importe_" + id).html(
@@ -408,16 +411,24 @@ body {
 				},
 				eliminarLineaPedido : function(id) {
 					$("#row_" + id).remove();
+					console.log("entra linea ocultar" + total1);
 					this.calcularGranTotal();
+					if (total1 == 0) {
+						console.log("entra en ocultar");
+						$('#carrito').css("display", "none");
+					}
 				},
+
 				calcularGranTotal : function() {
 					var total = 0;
 
 					$('span[id^="total_importe_"]').each(function() {
 						total += parseInt($(this).html());
+
 					});
 
 					$('#gran_total').html(total);
+					total1 = total;
 				}
 			};
 		</script>

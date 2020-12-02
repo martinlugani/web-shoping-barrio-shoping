@@ -1,6 +1,7 @@
 package com.edu.proyecto.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,7 +37,7 @@ import com.edu.proyecto.models.service.IProductoServices;
 
 @Controller
 @RequestMapping("/pedido")
-@SessionAttributes("pedido")
+
 public class PedidoController {
 
 	@Autowired
@@ -158,6 +159,7 @@ public class PedidoController {
 		estados.add("Terminado");
 		estados.add("Entregado");
 		model.addAttribute("estados", estados);
+		model.addAttribute("url", "/pedido/modificar/cliente/");
 		return "comercio/pedido-form";
 	}
 
@@ -165,6 +167,42 @@ public class PedidoController {
 	@GetMapping("/ver/{id}")
 	public String mostrarPedido(@PathVariable(value = "id") Long idPedido, @PathVariable(value = "id") Long id,
 			Model model, Authentication auth) {
+		model = setModel(model, idPedido);
+		return "comercio/pedido-form";
+	}
+
+	@Secured("ROLE_COMERCIO")
+	@PostMapping("/modificar/{id}")
+	public String modificarPedido(@PathVariable(value = "id") Long idPedido, @Valid Pedido ped) {
+		Pedido pedido = pedidoService.findById(idPedido);
+
+		pedido.setEstado(ped.getEstado());
+
+		pedidoService.save(pedido);
+
+		return "redirect:/pedido/ver/" + idPedido;
+	}
+
+	@Secured("ROLE_CLIENTE")
+	@PostMapping("/modificar/cliente/{id}")
+	public String modificarPedidoCliente(@PathVariable(value = "id") Long idPedido, @Valid Pedido ped, Model model) {
+		Pedido pedido = pedidoService.findById(idPedido);
+		if (pedido.getEntrega() == null) {
+			pedido.setEntrega(new Date());
+
+			pedido.setEstado("Entregado");
+		} else {
+
+			pedido.setEntrega(null);
+			pedido.setEstado("Terminado");
+		}
+		pedidoService.save(pedido);
+		model.addAttribute("success", "Su pedido se ha guardado");
+		model = setModel(model, idPedido);
+		return "comercio/pedido-form";
+	}
+
+	private Model setModel(Model model, Long idPedido) {
 		Pedido pedido = pedidoService.findById(idPedido);
 
 		model.addAttribute("pedido", pedido);
@@ -176,17 +214,11 @@ public class PedidoController {
 		estados.add("Solicitado");
 		estados.add("En preparación");
 		estados.add("Terminado");
-		
+
 		model.addAttribute("estados", estados);
-		return "comercio/pedido-form";
-	}
+		model.addAttribute("url", "/pedido/modificar/");
 
-	@Secured("ROLE_COMERCIO")
-	@PostMapping("/modificar/{id}")
-	public String modificarPedido(@PathVariable(value = "id") Long idPedido, @Valid Pedido ped) {
-		Pedido pedido = pedidoService.findById(idPedido);
-		pedidoService.save(ped);
+		return model;
 
-		return "redirect:/pedido/ver/" + idPedido;
 	}
 }

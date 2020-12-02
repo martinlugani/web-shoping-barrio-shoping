@@ -7,16 +7,23 @@
 	<nav th:replace="layout/layout :: nav-up"></nav>
 	<aside th:replace="layout/layout :: nav-left"></aside>
 	<div class="content-wrapper">
+		<div th:replace="layout/layout :: alertas"></div>
 		<div class="container py-4">
 
 			<div class="card bg-dark text-white">
-				<div class="card-header">Pedido</div>
+				<div class="card-header">
+					<h4 th:text="'Detalle pedido '+ ${pedido.comercio.razonSocial}"></h4>
+				</div>
 				<div class="card-body">
-					<form th:action="@{/pedido/modificar/}+${pedido.id}"
-						th:object="${pedido}" method="post" enctype="multipart/form-data">
+					<form th:action=" @{${url}}+${pedido.id}" th:object="${pedido}"
+						method="post" enctype="multipart/form-data">
+
 						<input type="hidden" th:value="${pedido.id}"
 							th:field="${pedido.id}" name="id" /> <input type="hidden"
-							th:value="${pedido.cliente.id}" th:name="clienteId" />
+							th:value="${pedido.cliente.id}" th:name="clienteId" /> <input
+							sec:authorize="hasRole('ROLE_CLIENTE')" type="hidden"
+							th:value="${pedido.estado}" th:field="${pedido.estado}"
+							name="estado" />
 
 						<div class="form-group row">
 							<label for="nombre" class="col-sm-2 col-form-label">Nombre
@@ -27,10 +34,18 @@
 
 							</div>
 						</div>
-						<div class="form-group row">
+						<div class="form-group row" sec:authorize="hasRole('ROLE_COMERCIO')" >
 							<label for="nombre" class="col-sm-2 col-form-label">E-mail</label>
 							<div class="col-sm-6">
 								<label th:text="${pedido.cliente.email}"
+									th:field="${pedido.cliente.email}"></label>
+
+							</div>
+						</div>
+							<div class="form-group row" sec:authorize="hasRole('ROLE_CLIENTE')">
+							<label for="nombre" class="col-sm-2 col-form-label">E-mail del comercio</label>
+							<div class="col-sm-6">
+								<label th:text="${pedido.comercio.email}"
 									th:field="${pedido.cliente.email}"></label>
 
 							</div>
@@ -63,19 +78,15 @@
 						<div class="form-group row"
 							sec:authorize="hasRole('ROLE_CLIENTE')">
 							<label for="nombre" class="col-sm-2 col-form-label">Estado
-								del pedido</label>
-							<div class="btn-group dropright">
-								<label for="nombre" class="col-sm-2 col-form-label">Estado
-									del pedido</label> <a class="nav-item dropdown show mx-2"> <select
-									th:field="*{estado}" id="estado"
-									class="form-control-dark bg-dark" th:name="status">
+								del pedido</label> <label for="nombre" class="col-sm-2 col-form-label"
+								th:text="${pedido.estado}"></label>
 
-										<option th:each="estadoe :${estados}" class="bg-dark"
-											th:text="${estadoe}" th:value="${estadoe}"></option>
-
-								</select></a>
-							</div>
 						</div>
+						<span th:if="${pedido.estado}!='Terminado'"> No se puede
+							cerrar este pedido por su estado </span>
+
+						<div class="form-group row"
+							sec:authorize="hasRole('ROLE_CLIENTE')"></div>
 						<div class="form-group row">
 							<table class="table table-sm table-striped table-dark">
 								<thead>
@@ -117,10 +128,14 @@
 
 						<div class="form-group row">
 
-							<div class="col-sm-6">
-								<input type="submit" value="Guardar " class="btn btn-secondary" />
+							<div class="col-sm-6" th:if="${pedido.estado}=='Terminado'">
+								<input type="submit" value="Guardar Entregado "
+									class="btn btn-secondary" />
 							</div>
-							<div class="col-sm-6">boton regresar</div>
+							<div class="col-sm-6">
+								<a type="button" class="btn btn-success"
+									th:href="@{/pedido/lista/cliente/}">Volver</a>
+							</div>
 						</div>
 
 					</form>

@@ -18,7 +18,7 @@
 
 				<div class="card bg-dark text-white ">
 					<div class="card-header">
-						<h5>Pedidos</h5>
+						<h4>Pedidos</h4>
 
 					</div>
 
@@ -42,8 +42,8 @@
 								</tr>
 							</thead>
 							<tbody th:each="pedido : ${pedidos}">
-								<tr>
-									<td th:text="${pedido.createAt}"></td>
+								<tr th:if="${pedido.entrega}==null ">
+									<td th:text="${pedido.createAt}" ></td>
 
 									<td th:text="${pedido.cliente.nicname}"></td>
 									<td th:text="${pedido.cliente.email}"></td>
